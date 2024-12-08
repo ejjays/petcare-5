@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once('../config/database.php');
-require_once('chat-widget.php');
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
     header('Location: ../views/login.php');
@@ -279,6 +278,6 @@ $pets = $pets_stmt->get_result();
 
     <!-- Include the Add Pet Modal here -->
     <?php include '../components/add-pet-modal.php'; ?>
-   <?php echo loadChatWidget(); ?>
+   
 </body>
 </html>
