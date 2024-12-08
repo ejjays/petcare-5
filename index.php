@@ -97,7 +97,3 @@ ob_end_flush();
 <?php
 ob_end_flush();
 ?>
->>>>>>> 8207b2e (Update Code)
-
-
-ey ey ey
