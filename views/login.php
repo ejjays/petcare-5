@@ -45,8 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://accounts.google.com/gapi/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="45592183048-24gcf76rhb00kfbbo1k690g13h6bh54h.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
     <title>Pet Login System</title>
     <style>
         * {
@@ -175,6 +176,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 .g-signin2 .abcRioButton {
     width: 100% !important;
 }
+
+.google-signin-container {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.g_id_signin {
+    width: 100%;
+}
+
+.g_id_signin > div {
+    width: 100% !important;
+}
+
     </style>
 </head>
 <body>
@@ -217,33 +234,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p><a href="forgot-password.php">Forgot Password?</a></p>
                 <p style="margin-top: 0.5rem;">Don't have an account? <a href="signUP.php">Register</a></p>
             </div>
-            <div class="form-group" style="margin-top: 1rem;">
-    <div class="g-signin2" data-onsuccess="onSignIn" style="width: 100%;"></div>
-</div>
-        </form>
-        <div class="pet-decoration">🐱</div>
+        
+<!-- Replace the existing Google Sign-In div with this -->
+<div class="google-signin-container" style="margin-top: 1rem;">
+    <div id="g_id_onload"
+         data-client_id="45592183048-24gcf76rhb00kfbbo1k690g13h6bh54h.apps.googleusercontent.com"
+         data-context="signin"
+         data-callback="handleCredentialResponse">
     </div>
+    <div class="g_id_signin" 
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-shape="rectangular"
+         data-width="100%">
+    </div>
+</div>
     
     
-   <script>
-function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    var id_token = googleUser.getAuthResponse().id_token;
+<script>
+function handleCredentialResponse(response) {
+    console.log("Google response received");
+    
+    // Add this line to see the full response
+    console.log(response);
 
-    // Send the token to your server
-    fetch('process-google-login.php', {
+    fetch('google-auth.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            token: id_token,
-            email: profile.getEmail(),
-            name: profile.getName()
+            id_token: response.credential
         })
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log("Raw response:", response);
+        return response.json();
+    })
     .then(data => {
+        console.log("Processed data:", data);
         if (data.success) {
             window.location.href = '../user/dashboard.php';
         } else {
@@ -256,24 +287,21 @@ function onSignIn(googleUser) {
     });
 }
 
-// Add proper initialization
-function init() {
-    gapi.load('auth2', function() {
-        gapi.auth2.init({
-            client_id: '45592183048-24gcf76rhb00kfbbo1k690g13h6bh54h.apps.googleusercontent.com'
-        });
+// Add this function to handle initialization
+function initGoogle() {
+    google.accounts.id.initialize({
+        client_id: "45592183048-24gcf76rhb00kfbbo1k690g13h6bh54h.apps.googleusercontent.com",
+        callback: handleCredentialResponse
     });
 }
 
-
-
-function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-        window.location.href = 'logout.php';
+// Add this to load the Google platform
+window.onload = function() {
+    google.accounts.id.initialize({
+        client_id: "45592183048-24gcf76rhb00kfbbo1k690g13h6bh54h.apps.googleusercontent.com",
+        callback: handleCredentialResponse
     });
-}
-
+};
 </script>
     
 </body>
