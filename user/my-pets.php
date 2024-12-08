@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('../config/database.php');
+require_once('chat-widget.php');
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
@@ -280,5 +281,6 @@ $pets = $pets_stmt->get_result();
 
     <!-- Include the Add Pet Modal here -->
     <?php include '../components/add-pet-modal.php'; ?>
+<?php echo loadChatWidget(); ?>
 </body>
 </html>
