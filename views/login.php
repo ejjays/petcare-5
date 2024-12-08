@@ -227,8 +227,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script>(function(){var js,fs,d=document,id="tars-widget-script",b="https://tars-file-upload.s3.amazonaws.com/bulb/";if(!d.getElementById(id)){js=d.createElement("script");js.id=id;js.type="text/javascript";js.src=b+"js/widget.js";fs=d.getElementsByTagName("script")[0];fs.parentNode.insertBefore(js,fs)}})();window.tarsSettings = {"convid": "JNG3R7", "href": "https://chatbot.hellotars.com/conv/JNG3R7"};</script>
     
-    
->>>>>>> 8207b2e (Update Code)
 <script>
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
