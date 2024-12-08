@@ -253,6 +253,26 @@ function onSignIn(googleUser) {
         }
     });
 }
+
+
+function onSignIn(googleUser) {
+    var id_token = googleUser.getAuthResponse().id_token;
+    
+    // Send the token to your server
+    fetch('handle_google_login.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: id_token })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = '../user/dashboard.php';
+        }
+    });
+}
 </script>
 </body>
 </html>
