@@ -210,12 +210,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
         <div class="pet-decoration">🐱</div>
     </div>
-<<<<<<< HEAD
-=======
-    
+
     <script>(function(){var js,fs,d=document,id="tars-widget-script",b="https://tars-file-upload.s3.amazonaws.com/bulb/";if(!d.getElementById(id)){js=d.createElement("script");js.id=id;js.type="text/javascript";js.src=b+"js/widget.js";fs=d.getElementsByTagName("script")[0];fs.parentNode.insertBefore(js,fs)}})();window.tarsSettings = {"convid": "JNG3R7", "href": "https://chatbot.hellotars.com/conv/JNG3R7"};</script>
     
     
 >>>>>>> 8207b2e (Update Code)
+<script>
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    var id_token = googleUser.getAuthResponse().id_token;
+
+    // Send the token to your server
+    fetch('process-google-login.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            token: id_token,
+            email: profile.getEmail(),
+            name: profile.getName()
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = '../user/dashboard.php';
+        } else {
+            alert('Login failed: ' + data.message);
+        }
+    });
+}
+</script>
 </body>
 </html>
