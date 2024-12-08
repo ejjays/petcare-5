@@ -162,6 +162,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 2rem;
             filter: grayscale(0.5);
         }
+         
+        .g-signin2 {
+    width: 100% !important;
+    margin-top: 1rem;
+}
+
+.g-signin2 > div {
+    margin: 0 auto;
+    width: 100% !important;
+}
+
+.g-signin2 .abcRioButton {
+    width: 100% !important;
+}
     </style>
 </head>
 <body>
