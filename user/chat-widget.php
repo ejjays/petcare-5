@@ -3,13 +3,15 @@
 
 function loadChatWidget() {
     return <<<HTML
-     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+    <script>
+        if (!window.chatWidgetLoaded) {
+            window.chatWidgetLoaded = true;
             let script = document.createElement("script");
             script.src = "https://cdn.jsdelivr.net/gh/ejjays/mvj/script.js";
+            script.id = "chat-widget-script";
             document.body.appendChild(script);
-        });
+        }
     </script>
 HTML;
 }
-?> 
+?>
