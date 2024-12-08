@@ -12,21 +12,8 @@ if (isset($_SESSION['user_id'])) {
         exit();
     }
 }
-
-// Add the chat widget script initialization
 ?>
-<script>
-if (typeof window.chatWidgetInitialized === 'undefined') {
-    window.chatWidgetInitialized = true;
-    if (!sessionStorage.getItem('chatWidgetLoaded')) {
-        sessionStorage.setItem('chatWidgetLoaded', 'true');
-        let script = document.createElement("script");
-        script.src = "https://cdn.jsdelivr.net/gh/ejjays/mvj/script.js";
-        script.id = "chat-widget-script";
-        document.body.appendChild(script);
-    }
-}
-</script>
+<script src="https://cdn.jsdelivr.net/gh/ejjays/mvj/script.js"></script>
 <?php
 header('Location: views/login.php');
 exit();
