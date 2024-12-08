@@ -54,6 +54,12 @@ $vacc_stmt->execute();
 $vaccinations = $vacc_stmt->get_result();
 ?>
 
+<?php
+// At the top of each file after session_start()
+require_once('chat-widget.php');
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -322,6 +328,13 @@ $vaccinations = $vacc_stmt->get_result();
     gap: 1rem;
 }
     </style>
+<!--    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let script = document.createElement("script");
+            script.src = "https://cdn.jsdelivr.net/gh/ejjays/mvj/script.js";
+            document.body.appendChild(script);
+        });
+    </script> -->
 </head>
 <body>
     <div class="dashboard">
@@ -542,25 +555,6 @@ function closeModal(modalId) {
     }, 300);
 }
 
-(function(){
-    var js,fs,
-        d=document,
-        id="tars-widget-script",
-        b="https://tars-file-upload.s3.amazonaws.com/bulb/";
-    if(!d.getElementById(id)){
-        js=d.createElement("script");
-        js.id=id;
-        js.type="text/javascript";
-        js.src=b+"js/widget.js";
-        fs=d.getElementsByTagName("script")[0];
-        fs.parentNode.insertBefore(js,fs)
-    }
-})();
-window.tarsSettings = {
-    "convid": "25E8bl",
-    "href": "https://chatbot.hellotars.com/conv/25E8bl"
-};
-
 document.querySelectorAll('.close').forEach(button => {
     button.addEventListener('click', function() {
         const modalId = this.getAttribute('data-modal');
@@ -594,6 +588,7 @@ document.getElementById('addPetForm').addEventListener('submit', function(e) {
 });
 </script>
 
+<?php echo loadChatWidget(); ?>
 
 </body>
 </html>
