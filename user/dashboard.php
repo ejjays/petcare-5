@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('../config/database.php');
+require_once('chat-widget.php');
 
 // Check if logged in
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
@@ -54,10 +55,6 @@ $vacc_stmt->execute();
 $vaccinations = $vacc_stmt->get_result();
 ?>
 
-<?php
-// At the top of each file after session_start()
-require_once('chat-widget.php');
-?>
 
 
 <!DOCTYPE html>
