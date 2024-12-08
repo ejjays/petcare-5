@@ -12,4 +12,4 @@ function loadChatWidget() {
     </script>
 HTML;
 }
-?>
+?> 
