@@ -2,13 +2,19 @@
 session_start();
 require_once('../config/database.php');
 
+<<<<<<< HEAD
 // Check if user is logged in
+=======
+>>>>>>> 8207b2e (Update Code)
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
     header('Location: ../login.php');
     exit();
 }
 
+<<<<<<< HEAD
 // Fetch user's pets for filtering
+=======
+>>>>>>> 8207b2e (Update Code)
 $user_id = $_SESSION['user_id'];
 $pets_query = "SELECT DISTINCT pet_type FROM pets WHERE owner_id = ?";
 $stmt = $conn->prepare($pets_query);
@@ -16,7 +22,10 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user_pets = $stmt->get_result();
 
+<<<<<<< HEAD
 // Fetch all food guides
+=======
+>>>>>>> 8207b2e (Update Code)
 $guides_query = "
     SELECT fg.*, u.email as creator_email 
     FROM food_guides fg
@@ -179,7 +188,11 @@ $guides = $conn->query($guides_query);
             transform: translateX(5px);
         }
     </style>
+<<<<<<< HEAD
     <script>
+=======
+        <script>
+>>>>>>> 8207b2e (Update Code)
         document.addEventListener("DOMContentLoaded", function() {
             let script = document.createElement("script");
             script.src = "https://cdn.jsdelivr.net/gh/ejjays/mvj/script.js";

@@ -361,7 +361,11 @@ body {
 
 
     </style>
+<<<<<<< HEAD
     <script>
+=======
+        <script>
+>>>>>>> 8207b2e (Update Code)
         document.addEventListener("DOMContentLoaded", function() {
             let script = document.createElement("script");
             script.src = "https://cdn.jsdelivr.net/gh/ejjays/mvj/script.js";

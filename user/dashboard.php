@@ -2,13 +2,19 @@
 session_start();
 require_once('../config/database.php');
 
+<<<<<<< HEAD
 // Check if logged in
+=======
+>>>>>>> 8207b2e (Update Code)
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
     header('Location: ../views/login.php');
     exit();
 }
 
+<<<<<<< HEAD
 // Fetch user data
+=======
+>>>>>>> 8207b2e (Update Code)
 $user_id = $_SESSION['user_id'];
 $user_query = "
     SELECT u.*, up.* 
@@ -20,14 +26,20 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 
+<<<<<<< HEAD
 // Fetch user's pets
+=======
+>>>>>>> 8207b2e (Update Code)
 $pets_query = "SELECT * FROM pets WHERE owner_id = ? ORDER BY created_at DESC";
 $pets_stmt = $conn->prepare($pets_query);
 $pets_stmt->bind_param("i", $user_id);
 $pets_stmt->execute();
 $pets = $pets_stmt->get_result();
 
+<<<<<<< HEAD
 // Fetch upcoming consultations
+=======
+>>>>>>> 8207b2e (Update Code)
 $consultations_query = "
     SELECT mc.*, p.name as pet_name 
     FROM medical_consultations mc 
@@ -40,7 +52,10 @@ $cons_stmt->bind_param("i", $user_id);
 $cons_stmt->execute();
 $consultations = $cons_stmt->get_result();
 
+<<<<<<< HEAD
 // Fetch upcoming vaccinations
+=======
+>>>>>>> 8207b2e (Update Code)
 $vaccinations_query = "
     SELECT vl.*, p.name as pet_name 
     FROM vaccination_logs vl 
@@ -54,8 +69,11 @@ $vacc_stmt->execute();
 $vaccinations = $vacc_stmt->get_result();
 ?>
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 8207b2e (Update Code)
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -324,13 +342,21 @@ $vaccinations = $vacc_stmt->get_result();
     gap: 1rem;
 }
     </style>
+<<<<<<< HEAD
 <!--    <script>
+=======
+        <script>
+>>>>>>> 8207b2e (Update Code)
         document.addEventListener("DOMContentLoaded", function() {
             let script = document.createElement("script");
             script.src = "https://cdn.jsdelivr.net/gh/ejjays/mvj/script.js";
             document.body.appendChild(script);
         });
+<<<<<<< HEAD
     </script> -->
+=======
+    </script>
+>>>>>>> 8207b2e (Update Code)
 </head>
 <body>
     <div class="dashboard">
