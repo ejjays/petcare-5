@@ -43,9 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://accounts.google.com/gapi/platform.js" async defer></script>
+    <!-- Fix the broken script tag -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <meta name="google-signin-client_id" content="45592183048-24gcf76rhb00kfbbo1k690g13h6bh54h.apps.googleusercontent.com">
 </head>
     <title>Pet Login System</title>
@@ -192,6 +193,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     width: 100% !important;
 }
 
+.google-signin-container {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#g_id_signin {
+    width: 100%;
+}
+
     </style>
 </head>
 <body>
@@ -234,32 +246,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p><a href="forgot-password.php">Forgot Password?</a></p>
                 <p style="margin-top: 0.5rem;">Don't have an account? <a href="signUP.php">Register</a></p>
             </div>
+            </form>
         
-<!-- Replace the existing Google Sign-In div with this -->
 <div class="google-signin-container" style="margin-top: 1rem;">
-    <div id="g_id_onload"
-         data-client_id="45592183048-24gcf76rhb00kfbbo1k690g13h6bh54h.apps.googleusercontent.com"
-         data-context="signin"
-         data-callback="handleCredentialResponse">
-    </div>
-    <div class="g_id_signin" 
-         data-type="standard"
-         data-size="large"
-         data-theme="outline"
-         data-text="sign_in_with"
-         data-shape="rectangular"
-         data-width="100%">
-    </div>
+    <div id="g_id_signin"></div>
 </div>
     
     
 <script>
 function handleCredentialResponse(response) {
-    console.log("Google response received");
+    console.log("Google response received:", response);
     
-    // Add this line to see the full response
-    console.log(response);
-
     fetch('google-auth.php', {
         method: 'POST',
         headers: {
@@ -270,38 +267,58 @@ function handleCredentialResponse(response) {
         })
     })
     .then(response => {
-        console.log("Raw response:", response);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
         return response.json();
     })
     .then(data => {
-        console.log("Processed data:", data);
+        console.log("Server response:", data);
         if (data.success) {
             window.location.href = '../user/dashboard.php';
         } else {
-            alert('Login failed: ' + data.message);
+            alert('Login failed: ' + (data.message || 'Unknown error'));
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred during login');
+        alert('An error occurred during login: ' + error.message);
     });
 }
 
-// Add this function to handle initialization
-function initGoogle() {
-    google.accounts.id.initialize({
-        client_id: "45592183048-24gcf76rhb00kfbbo1k690g13h6bh54h.apps.googleusercontent.com",
-        callback: handleCredentialResponse
-    });
+function initializeGoogle() {
+    if (typeof google !== 'undefined') {
+        try {
+            google.accounts.id.initialize({
+                client_id: "45592183048-24gcf76rhb00kfbbo1k690g13h6bh54h.apps.googleusercontent.com",
+                callback: handleCredentialResponse,
+                auto_select: false, // Don't automatically select the first account
+                cancel_on_tap_outside: true // Allow clicking outside to cancel
+            });
+            
+            google.accounts.id.renderButton(
+                document.getElementById("g_id_signin"),
+                { 
+                    theme: "outline", 
+                    size: "large", 
+                    width: "100%",
+                    text: "continue_with" // Shows "Continue with Google"
+                }
+            );
+        } catch (error) {
+            console.error('Error initializing Google Sign-In:', error);
+        }
+    } else {
+        setTimeout(initializeGoogle, 100);
+    }
 }
 
-// Add this to load the Google platform
-window.onload = function() {
-    google.accounts.id.initialize({
-        client_id: "45592183048-24gcf76rhb00kfbbo1k690g13h6bh54h.apps.googleusercontent.com",
-        callback: handleCredentialResponse
-    });
-};
+// Call initializeGoogle when the page loads
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeGoogle);
+} else {
+    initializeGoogle();
+}
 </script>
     
 </body>
