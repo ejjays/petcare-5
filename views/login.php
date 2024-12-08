@@ -43,11 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Add right after your existing <meta> tags -->
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-<meta name="google-signin-client_id" content="45592183048-24gcf76rhb00kfbbo1k690g13h6bh54h.apps.googleusercontent.com">
-    <meta charset="UTF-8">
+   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="45592183048-24gcf76rhb00kfbbo1k690g13h6bh54h.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <title>Pet Login System</title>
     <style>
         * {
@@ -162,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 2rem;
             filter: grayscale(0.5);
         }
-         
+        
         .g-signin2 {
     width: 100% !important;
     margin-top: 1rem;
@@ -218,16 +217,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p><a href="forgot-password.php">Forgot Password?</a></p>
                 <p style="margin-top: 0.5rem;">Don't have an account? <a href="signUP.php">Register</a></p>
             </div>
-<div class="form-group" style="margin-top: 1rem;">
+            <div class="form-group" style="margin-top: 1rem;">
     <div class="g-signin2" data-onsuccess="onSignIn" style="width: 100%;"></div>
 </div>
         </form>
         <div class="pet-decoration">🐱</div>
     </div>
-
-    <script>(function(){var js,fs,d=document,id="tars-widget-script",b="https://tars-file-upload.s3.amazonaws.com/bulb/";if(!d.getElementById(id)){js=d.createElement("script");js.id=id;js.type="text/javascript";js.src=b+"js/widget.js";fs=d.getElementsByTagName("script")[0];fs.parentNode.insertBefore(js,fs)}})();window.tarsSettings = {"convid": "JNG3R7", "href": "https://chatbot.hellotars.com/conv/JNG3R7"};</script>
     
-<script>
+    
+   <script>
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     var id_token = googleUser.getAuthResponse().id_token;
@@ -251,28 +249,32 @@ function onSignIn(googleUser) {
         } else {
             alert('Login failed: ' + data.message);
         }
-    });
-}
-
-
-function onSignIn(googleUser) {
-    var id_token = googleUser.getAuthResponse().id_token;
-    
-    // Send the token to your server
-    fetch('handle_google_login.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: id_token })
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            window.location.href = '../user/dashboard.php';
-        }
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred during login');
     });
 }
+
+// Add proper initialization
+function init() {
+    gapi.load('auth2', function() {
+        gapi.auth2.init({
+            client_id: '45592183048-24gcf76rhb00kfbbo1k690g13h6bh54h.apps.googleusercontent.com'
+        });
+    });
+}
+
+
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        window.location.href = 'logout.php';
+    });
+}
+
 </script>
+    
 </body>
 </html>
