@@ -204,6 +204,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p><a href="forgot-password.php">Forgot Password?</a></p>
                 <p style="margin-top: 0.5rem;">Don't have an account? <a href="signUP.php">Register</a></p>
             </div>
+<div class="form-group" style="margin-top: 1rem;">
+    <div class="g-signin2" data-onsuccess="onSignIn" style="width: 100%;"></div>
+</div>
         </form>
         <div class="pet-decoration">🐱</div>
     </div>
