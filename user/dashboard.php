@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once('../config/database.php');
-require_once('chat-widget.php');
 
 // Check if logged in
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
@@ -584,8 +583,5 @@ document.getElementById('addPetForm').addEventListener('submit', function(e) {
     });
 });
 </script>
-
-<?php echo loadChatWidget(); ?>
-
 </body>
 </html>
