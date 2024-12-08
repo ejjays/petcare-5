@@ -3,13 +3,11 @@ session_start();
 require_once('../config/database.php');
 require_once('chat-widget.php');
 
-// Check if user is logged in
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
     header('Location: ../views/login.php');
     exit();
 }
 
-// Fetch user data
 $user_id = $_SESSION['user_id'];
 $user_query = "
     SELECT u.*, up.* 
@@ -176,13 +174,13 @@ $pets = $pets_stmt->get_result();
             color: #8B5CF6;
         }
     </style>
-    <script>
+ <!--   <script>
         document.addEventListener("DOMContentLoaded", function() {
             let script = document.createElement("script");
             script.src = "https://cdn.jsdelivr.net/gh/ejjays/mvj/script.js";
             document.body.appendChild(script);
         });
-    </script>
+    </script> -->
 </head>
 <body>
     <div class="dashboard">
@@ -281,6 +279,6 @@ $pets = $pets_stmt->get_result();
 
     <!-- Include the Add Pet Modal here -->
     <?php include '../components/add-pet-modal.php'; ?>
-<?php echo loadChatWidget(); ?>
+   <?php echo loadChatWidget(); ?>
 </body>
 </html>
